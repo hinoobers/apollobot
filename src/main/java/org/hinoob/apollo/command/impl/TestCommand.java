@@ -22,7 +22,7 @@ public class TestCommand extends TextCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[0];
+    public List<String> getAliases() {
+        return List.of();
     }
 }

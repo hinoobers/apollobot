@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.hinoob.apollo.command.types.SlashCommand;
 import org.hinoob.apollo.data.Datastore;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TestSlashCommand extends SlashCommand {
 
     @Override
@@ -21,8 +24,8 @@ public class TestSlashCommand extends SlashCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[0];
+    public List<String> getAliases() {
+        return List.of();
     }
 
     @Override

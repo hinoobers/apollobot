@@ -15,8 +15,8 @@ public class DadJokeCommand extends TestCommand {
     }
 
     @Override
-    public String[] getAliases() {
-        return new String[0];
+    public List<String> getAliases() {
+        return List.of();
     }
 
     @Override

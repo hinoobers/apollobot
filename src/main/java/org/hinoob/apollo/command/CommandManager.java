@@ -6,7 +6,9 @@ import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.hinoob.apollo.ApolloBot;
 import org.hinoob.apollo.command.impl.TestCommand;
 import org.hinoob.apollo.command.impl.TestSlashCommand;
-import org.hinoob.apollo.command.impl.fun.DadJokeCommand;
+import org.hinoob.apollo.command.impl.economy.TicketsCommand;
+import org.hinoob.apollo.command.impl.fun.*;
+import org.hinoob.apollo.command.impl.minecraft.MinecraftServerLookupCommand;
 import org.hinoob.apollo.command.impl.moderation.ChangePrefixCommand;
 import org.hinoob.apollo.command.types.SlashCommand;
 import org.hinoob.apollo.command.types.TextCommand;
@@ -20,10 +22,18 @@ public class CommandManager {
     private final List<Command> commands = new ArrayList<>();
 
     public void load() {
-        commands.add(new TestCommand());
-        commands.add(new TestSlashCommand());
+//        commands.add(new TestCommand());
+//        commands.add(new TestSlashCommand());
         commands.add(new ChangePrefixCommand());
         commands.add(new DadJokeCommand());
+        commands.add(new CoinflipCommand());
+        commands.add(new EightBallCommand());
+        commands.add(new ReverseCommand());
+        commands.add(new PingCommand());
+        commands.add(new TicketsCommand());
+
+        commands.add(new MinecraftServerLookupCommand());
+
 
         // Guild-only
         CommandListUpdateAction action = ApolloBot.getInstance().getJda().updateCommands();
@@ -42,7 +52,19 @@ public class CommandManager {
         List<String> args = parse(raw);
         for(Command command : this.commands) {
             if(command instanceof TextCommand txtcmd) {
-                if(!raw.startsWith(guildData.getPrefix() + txtcmd.getName())) continue;
+                if(!raw.startsWith(guildData.getPrefix() + txtcmd.getName())) {
+                    boolean a = false;
+                    for(String alias : txtcmd.getAliases()) {
+                        if(raw.startsWith(guildData.getPrefix() + alias)) {
+                            a = true;
+                            break;
+                        }
+                    }
+
+                    if(!a) {
+                        continue;
+                    }
+                }
 
                 txtcmd.handle(args, event, guildData);
             }

@@ -4,10 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.hinoob.apollo.command.CommandManager;
 import org.hinoob.apollo.data.DatastoreManager;
 import org.hinoob.apollo.listener.CommandListener;
+import org.hinoob.apollo.listener.MessageFilterListener;
 import org.hinoob.apollo.util.FileUtils;
 
 import java.lang.management.ThreadInfo;
@@ -57,8 +60,10 @@ public class ApolloBot {
 
         String botToken = FileUtils.readRaw("secure/bot.token");
         this.jda = JDABuilder.createDefault(botToken)
-                .addEventListeners(new CommandListener())
+                .addEventListeners(new CommandListener(), new MessageFilterListener())
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
+                .setStatus(OnlineStatus.DO_NOT_DISTURB)
+                .setActivity(Activity.playing("with your life"))
                 .build();
 
 
